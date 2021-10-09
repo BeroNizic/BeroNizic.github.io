@@ -49,8 +49,7 @@
   <body>
     <script>
       const tempiModi = ["presente", "condizionalePresente", "imperativo", "imperfetto", "futuroSemplice"];
-      const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire"];
-      // const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire", "avere", "andare", "finire", "essere"];
+      const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire", "avere", "andare", "finire", "essere"];
       const persone = ["io", "tu", "lei", "noi", "voi", "loro"];
 
       const pair = {
@@ -61,10 +60,10 @@
           stare: ["sto", "stai", "sta", "stiamo", "state", "stanno"],
           temere: ["temo", "temi", "teme", "temiamo", "temete", "temono"],
           servire: ["servo", "servi", "serve", "serviamo", "servite", "servono"],
-          avere: [],
-          andare: [],
-          finire: [],
-          essere: [],
+          avere: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
+          andare: ["vado", "vai", "va", "andiamo", "andate", "vanno"],
+          finire: ["finisco", "finisci", "finisce", "finiamo", "finite", "finiscono"],
+          essere: ["sono", "sei", "è", "siamo", "siete", "sono"],
           display: "presente",
         },
         imperfetto: {
@@ -74,10 +73,10 @@
           stare: ["stavo", "stavi", "stava", "stavamo", "stavate", "stavano"],
           temere: ["temevo", "temevi", "temeva", "temevamo", "temevate", "temevano"],
           servire: ["servivo", "servivi", "serviva", "servivamo", "servivate", "servivano"],
-          avere: [],
-          andare: [],
-          finire: [],
-          essere: [],
+          avere: ["avevo", "avevi", "aveva", "avevamo", "avevate", "avevano"],
+          andare: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"],
+          finire: ["finivo", "finivi", "finiva", "finivamo", "finivate", "finivano"],
+          essere: ["ero", "eri", "era", "eravamo", "eravate", "erano"],
           display: "imperfetto",
         },
         futuroSemplice: {
@@ -87,10 +86,10 @@
           stare: ["starò", "starai", "starà", "staremo", "starete", "staranno"],
           temere: ["temerò", "temerai", "temerà", "temeremo", "temerete", "temeranno"],
           servire: ["servirò", "servirai", "servirà", "serviremo", "servirete", "serviranno"],
-          avere: [],
-          andare: [],
-          finire: [],
-          essere: [],
+          avere: ["avrò", "avrai", "avrà", "avremo", "avrete", "avranno"],
+          andare: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
+          finire: ["finirò", "finirai", "finirà", "finiremo", "finirete", "finiranno"],
+          essere: ["sarò", "sarai", "sarà", "saremo", "sarete", "saranno"],
           display: "futuro semplice",
         },
         condizionalePresente: {
@@ -100,10 +99,10 @@
           stare: ["starei", "staresti", "starebbe", "staremmo", "stareste", "starebbero"],
           temere: ["temerei", "temeresti", "temerebbe", "temeremmo", "temereste", "temerebbero"],
           servire: ["servirei", "serviresti", "servirebbe", "serviremmo", "servireste", "servirebbero"],
-          avere: [],
-          andare: [],
-          finire: [],
-          essere: [],
+          avere: ["avrei", "avresti", "avrebbe", "avremmo", "avreste", "avrebbero"],
+          andare: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"],
+          finire: ["finirei", "finiresti", "finirebbe", "finiremmo", "finireste", "finirebbero"],
+          essere: ["sarei", "saresti", "sarebbe", "saremmo", "sareste", "sarebbero"],
           display: "condizionale presente",
         },
         imperativo: {
@@ -113,10 +112,10 @@
           stare: ["-", "sta'/ai", "stia", "stiamo", "state", "stiano"],
           temere: ["-", "temi", "tema", "temiamo", "temete", "temano"],
           servire: ["-", "servi", "serva", "serviamo", "servite", "servano"],
-          avere: [],
-          andare: [],
-          finire: [],
-          essere: [],
+          avere: ["-", "abbi", "abbia", "abbiamo", "abbiate", "abbiano"],
+          andare: ["-", "va'/vai", "vada", "andiamo", "andate", "vadano"],
+          finire: ["-", "finisci", "finisca", "finiamo", "finite", "finiscano"],
+          essere: ["-", "sii", "sia", "siamo", "siate", "siano"],
           display: "imperativo",
         },
       };
