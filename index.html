@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
     <title>Simple quiz</title>
+    <meta name="viewport" content="width=device-width" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -23,6 +25,16 @@
       integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
       crossorigin="anonymous"
     ></script>
+
+    <style>
+      .mainWrapper {
+        align-items: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
     <script>
@@ -107,7 +119,7 @@
 
         let question = verbo + ", " + tempoModo + ", " + persona;
         document.getElementById("domanda").innerText = question;
-        document.getElementById("risposta").innerText = "";
+        document.getElementById("risposta").innerText = "Premi risposta";
         risposta = pair[tempoModo][verbo][personaIndice];
       }
 
@@ -115,15 +127,15 @@
         document.getElementById("risposta").innerText = risposta;
       }
     </script>
-    <div class="container">
-      <div class="row mt-4">
+    <div class="container mainWrapper">
+      <div class="row">
         <button class="btn btn-primary" type="button" onclick="getRandom()">Domanda</button>
       </div>
       <div class="row center mt-2 mb-2" id="domanda">Premi Domanda</div>
       <div class="row">
         <button class="btn btn-primary mt-2 mb-2" type="button" onclick="mostraRisposta()">Risposta</button>
       </div>
-      <div class="row center" id="risposta"></div>
+      <div class="row center" id="risposta">Premi risposta</div>
     </div>
   </body>
 </html>
