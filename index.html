@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+      integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <script>
+      const tempiModi = ["presente", "condizionalePresente", "imperativo", "imperfetto", "futuroSemplice"];
+      const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire"];
+      // const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire", "avere", "andare", "finire", "essere"];
+      const persone = ["io", "tu", "lei", "noi", "voi", "loro"];
+
+      const pair = {
+        presente: {
+          parlare: ["parlo", "parli", "parla", "parliamo", "parlate", "parlano"],
+          dare: ["do", "dai", "dà", "diamo", "date", "danno"],
+          fare: ["fo/accio", "fai", "fa", "facciamo", "fate", "fanno"],
+          stare: ["sto", "stai", "sta", "stiamo", "state", "stanno"],
+          temere: ["temo", "temi", "teme", "temiamo", "temete", "temono"],
+          servire: ["servo", "servi", "serve", "serviamo", "servite", "servono"],
+          avere: [],
+          andare: [],
+          finire: [],
+          essere: [],
+        },
+        imperfetto: {
+          parlare: ["parlavo", "parlavi", "parlava", "parlavamo", "parlavate", "parlavano"],
+          dare: ["davo", "davi", "dava", "davamo", "davate", "davano"],
+          fare: ["facevo", "facevi", "faceva", "facevamo", "facevate", "facevano"],
+          stare: ["stavo", "stavi", "stava", "stavamo", "stavate", "stavano"],
+          temere: ["temevo", "temevi", "temeva", "temevamo", "temevate", "temevano"],
+          servire: ["servivo", "servivi", "serviva", "servivamo", "servivate", "servivano"],
+          avere: [],
+          andare: [],
+          finire: [],
+          essere: [],
+        },
+        futuroSemplice: {
+          parlare: ["parlerò", "parlerai", "parlerà", "parleremo", "parlerete", "parleranno"],
+          dare: ["darò", "darai", "darà", "daremo", "darete", "daranno"],
+          fare: ["farò", "farai", "farà", "faremo", "farete", "faranno"],
+          stare: ["starò", "starai", "starà", "staremo", "starete", "staranno"],
+          temere: ["temerò", "temerai", "temerà", "temeremo", "temerete", "temeranno"],
+          servire: ["servirò", "servirai", "servirà", "serviremo", "servirete", "serviranno"],
+          avere: [],
+          andare: [],
+          finire: [],
+          essere: [],
+        },
+        condizionalePresente: {
+          parlare: ["parlerei", "parleresti", "parlerebbe", "parleremmo", "parlereste", "parlerebbero"],
+          dare: ["darei", "daresti", "darebbe", "daremmo", "dareste", "darebbero"],
+          fare: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"],
+          stare: ["starei", "staresti", "starebbe", "staremmo", "stareste", "starebbero"],
+          temere: ["temerei", "temeresti", "temerebbe", "temeremmo", "temereste", "temerebbero"],
+          servire: ["servirei", "serviresti", "servirebbe", "serviremmo", "servireste", "servirebbero"],
+          avere: [],
+          andare: [],
+          finire: [],
+          essere: [],
+        },
+        imperativo: {
+          parlare: ["-", "parla", "parli", "parliamo", "parlate", "parlino"],
+          dare: ["-", "da'/ai", "dia", "diamo", "date", "diano"],
+          fare: ["-", "fa'/ai", "faccia", "facciamo", "fate", "facciano"],
+          stare: ["-", "sta'/ai", "stia", "stiamo", "state", "stiano"],
+          temere: ["-", "temi", "tema", "temiamo", "temete", "temano"],
+          servire: ["-", "servi", "serva", "serviamo", "servite", "servano"],
+          avere: [],
+          andare: [],
+          finire: [],
+          essere: [],
+        },
+      };
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      let risposta = "";
+      function getRandom() {
+        let verbo = verbi[getRandomInt(verbi.length)];
+        let tempoModo = tempiModi[getRandomInt(tempiModi.length)];
+        let personaIndice = getRandomInt(persone.length);
+        let persona = persone[personaIndice];
+
+        let question = verbo + ", " + tempoModo + ", " + persona;
+        document.getElementById("domanda").innerText = question;
+        document.getElementById("risposta").innerText = "";
+        risposta = pair[tempoModo][verbo][personaIndice];
+      }
+
+      function mostraRisposta() {
+        document.getElementById("risposta").innerText = risposta;
+      }
+    </script>
+    <div class="container">
+      <div class="row mt-4">
+        <button class="btn btn-primary" type="button" onclick="getRandom()">Domanda</button>
+      </div>
+      <div class="row center mt-2 mb-2" id="domanda">Premi Domanda</div>
+      <div class="row">
+        <button class="btn btn-primary mt-2 mb-2" type="button" onclick="mostraRisposta()">Risposta</button>
+      </div>
+      <div class="row center" id="risposta"></div>
+    </div>
+  </body>
+</html>
