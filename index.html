@@ -48,9 +48,25 @@
   </head>
   <body>
     <script>
-      const tempiModi = ["presente", "condizionalePresente", "imperativo", "imperfetto", "futuroSemplice"];
+      const tempiModi = [
+        "indicativoPresente",
+        "indicativoPassatoProssimo",
+        "indicativoImperfetto",
+        "indicativoTrapassatoProssimo",
+        "indicativoPassatoRemoto",
+        "indicativoTrapassatoRemoto",
+        "indicativoFuturoSemplice",
+        "indicativoFuturoAnteriore",
+        "condizionalePresente",
+        "condizionalePassato",
+        "congiuntivoPresente",
+        "congiuntivoPassato",
+        "congiuntivoImperfetto",
+        "congiuntivoTrapassato",
+        "imperativoPresente",
+      ];
       const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire", "avere", "andare", "finire", "essere"];
-      const persone = ["io", "tu", "lei", "noi", "voi", "loro"];
+      const persone = ["io", "tu", "lui", "noi", "voi", "loro"];
 
       const pair = {
         presente: {
@@ -120,26 +136,45 @@
         },
       };
 
+      let verbs = [];
+
       function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
 
       let risposta = "";
       function getRandom() {
-        let verbo = verbi[getRandomInt(verbi.length)];
+        let verbo = verbs[getRandomInt(verbs.length)];
         let tempoModo = tempiModi[getRandomInt(tempiModi.length)];
         let personaIndice = getRandomInt(persone.length);
         let persona = persone[personaIndice];
 
-        let question = verbo + ", " + pair[tempoModo].display + ", " + persona;
+        let question = verbo.infinitoPresente + ", " + tempoModo + ", " + persona;
         document.getElementById("domanda").innerText = question;
         document.getElementById("risposta").innerText = "-";
-        risposta = pair[tempoModo][verbo][personaIndice];
+        risposta = verbo[tempoModo][persona];
       }
 
       function mostraRisposta() {
         document.getElementById("risposta").innerText = risposta;
       }
+
+      window.addEventListener("DOMContentLoaded", (evt) => {
+        let verbsParm = "";
+        verbi.forEach((e) => {
+          if (verbsParm) {
+            verbsParm += ",";
+          }
+          verbsParm += e;
+        });
+        //console.log(verbsParm);
+        //fetch("http://localhost:53994/verbs?infinito=" + verbsParm)
+        fetch("http://abadel.net/verbs?infinito=" + verbsParm, {
+          mode: "cors",
+        })
+          .then((response) => response.json())
+          .then((data) => (verbs = data));
+      });
     </script>
     <div class="container mainWrapper">
       <div class="row">
