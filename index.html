@@ -35,9 +35,13 @@
         justify-content: center;
       }
 
-      .btn {
+      .btn-custom {
         font-size: 200%;
         min-width: 150px;
+      }
+
+      .h5 {
+        margin-top: 0.5rem;
       }
 
       .testo {
@@ -159,6 +163,8 @@
         document.getElementById("risposta").innerText = risposta;
       }
 
+      function showSettings() {}
+
       window.addEventListener("DOMContentLoaded", (evt) => {
         let verbsParm = "";
         verbi.forEach((e) => {
@@ -169,7 +175,7 @@
         });
         //console.log(verbsParm);
         //fetch("http://localhost:53994/verbs?infinito=" + verbsParm)
-        fetch("http://abadel.net/verbs?infinito=" + verbsParm, {
+        fetch("https://www.abadel-develop.net/verbs?infinito=" + verbsParm, {
           mode: "cors",
         })
           .then((response) => response.json())
@@ -177,14 +183,189 @@
       });
     </script>
     <div class="container mainWrapper">
+      <button
+        class="btn"
+        type="button"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        style="
+          position: fixed;
+          right: 50px;
+          top: 50px;
+          width: 50px;
+          height: 50px;
+          background-repeat: no-repeat;
+          background-position: center;
+          min-width: 50px;
+          background-image: url('settings.png');
+        "
+      ></button>
+
       <div class="row">
-        <button class="btn btn-primary mb-4" type="button" onclick="getRandom()">Domanda</button>
+        <button class="btn btn-primary mb-4 btn-custom" type="button" onclick="getRandom()">Domanda</button>
       </div>
       <div class="row center mb-4 testo" id="domanda">-</div>
       <div class="row">
-        <button class="btn btn-primary mt-4 mb-4" type="button" onclick="mostraRisposta()">Risposta</button>
+        <button class="btn btn-primary mt-4 mb-4 btn-custom" type="button" onclick="mostraRisposta()">Risposta</button>
       </div>
       <div class="row center testo" id="risposta">-</div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Impostazioni di test</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="tbVerbi">Verbi</label>
+                <textarea type="text" class="form-control" id="tbVerbi">
+parlare, dare, fare, stare, temere, servire, avere, andare, finire, essere</textarea
+                >
+              </div>
+              <h5>Indicativo</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoPresente" checked />
+                    <label class="form-check-label" for="cbIndicativoPresente">Presente</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoPassatoProssimo" checked />
+                    <label class="form-check-label" for="cbIndicativoPassatoProssimo">Passato prossimo</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoImperfetto" checked />
+                    <label class="form-check-label" for="cbIndicativoImperfetto">Imperfetto</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoTrapassatoProssimo" checked />
+                    <label class="form-check-label" for="cbIndicativoTrapassatoProssimo">Trapassato prossimo</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoPassatoRemoto" />
+                    <label class="form-check-label" for="cbIndicativoPassatoRemoto">Passato remoto</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoTrapassatoRemoto" checked />
+                    <label class="form-check-label" for="cbIndicativoTrapassatoRemoto">Trapassato remoto</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoFuturoSemplice" checked />
+                    <label class="form-check-label" for="cbIndicativoFuturoSemplice">Futuro semplice</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIndicativoFuturoAnteriore" checked />
+                    <label class="form-check-label" for="cbIndicativoFuturoAnteriore">Futuro anteriorire</label>
+                  </div>
+                </div>
+              </div>
+              <h5>Condizionale</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCondizionalePresente" checked />
+                    <label class="form-check-label" for="cbCondizionalePresente">Presente</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCondizionalePassato" />
+                    <label class="form-check-label" for="cbCondizionalePassato">Passato</label>
+                  </div>
+                </div>
+              </div>
+              <h5>Congiuntivo</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoPresente" checked />
+                    <label class="form-check-label" for="cbCongiuntivoPresente">Presente</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoPassato" checked />
+                    <label class="form-check-label" for="cbCongiuntivoPassato">Passato</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoImperfetto" />
+                    <label class="form-check-label" for="cbCongiuntivoImperfetto">Imperfetto</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoTrapassato" />
+                    <label class="form-check-label" for="cbCongiuntivoTrapassato">Trapassato</label>
+                  </div>
+                </div>
+              </div>
+              <h5>Imperativo</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbImperativoPresente" />
+                    <label class="form-check-label" for="cbImperativoPresente">Presente</label>
+                  </div>
+                </div>
+              </div>
+              <h5>Persone</h5>
+              <div class="row">
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbIo" />
+                    <label class="form-check-label" for="cbIo">Io</label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbTu" />
+                    <label class="form-check-label" for="cbTu">Tu</label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbLui" />
+                    <label class="form-check-label" for="cbLui">Lui</label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbNoi" />
+                    <label class="form-check-label" for="cbNoi">Noi</label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbVoi" />
+                    <label class="form-check-label" for="cbTu">Voi</label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cbLoro" />
+                    <label class="form-check-label" for="cbLui">Loro</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
