@@ -86,6 +86,7 @@
       try {
         let ls = window.localStorage.length;
         localStorageAvailable = true;
+        alert("available");
       } catch (error) {
         localStorageAvailable = false;
         const msg = "localStorage not available because " + error;
