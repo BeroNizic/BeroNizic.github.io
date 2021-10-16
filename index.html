@@ -113,7 +113,7 @@
 
       function loadLocalStorage() {
         const ls = window.localStorage;
-        if (ls.getItem("abadel_quiz_settings") === "true") {
+        if (false && ls.getItem("abadel_quiz_settings") === "true") {
           const checkBoxes = document.querySelectorAll("input[type=checkbox");
           for (let cb of checkBoxes) {
             const lsVal = ls.getItem(cb.id);
