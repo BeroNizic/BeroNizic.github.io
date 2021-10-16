@@ -83,15 +83,16 @@
       let persone = [];
       let verbi = [];
       let localStorageAvailable = true;
+      let verbsText = "";
+      let verbsChanged = true;
+
       try {
         let ls = window.localStorage.length;
         localStorageAvailable = true;
-        alert("available");
       } catch (error) {
         localStorageAvailable = false;
         const msg = "localStorage not available because " + error;
         console.log(msg);
-        alert(msg);
       }
 
       function setTempiModi(writeToLocalStorage) {
@@ -138,8 +139,8 @@
         }
       }
 
-      function setVerbi(writeToLocalStorage) {
-        const verbsText = document.getElementById("tbVerbi").value;
+      function setVerbi(writeToLocalStorage) {        
+        verbsText = document.getElementById("tbVerbi").value;        
 
         if (writeToLocalStorage) {
           window.localStorage.setItem("tbVerbi", verbsText);
@@ -177,10 +178,12 @@
       function closeModal() {
         $("#exampleModal").modal("hide");
         if (localStorageAvailable) window.localStorage.setItem("abadel_quiz_settings", true);
-        retrieveVerbs(localStorageAvailable);
+        verbsChanged = false;
+        if (document.getElementById("tbVerbi").value !== verbsText) verbsChanged = true;      
+        retrieveVerbs(localStorageAvailable, verbsChanged);
       }
 
-      function retrieveVerbs(writeToLocalStorage) {
+      function retrieveVerbs(writeToLocalStorage, reloadVerbs = true) {
         document.getElementById("btnDomanda").disabled = true;
         document.getElementById("btnRisposta").disabled = true;
         document.getElementById("btnLoading").style.display = "block";
@@ -190,19 +193,25 @@
         setPersone(writeToLocalStorage);
         setTempiModi(writeToLocalStorage);
         setVerbi(writeToLocalStorage);
-        let verbsParm = verbi.join();
-        console.log("verbsParm", verbsParm);
+        if (reloadVerbs) {
+          let verbsParm = verbi.join();
+          console.log("verbsParm", verbsParm);
 
-        fetch("https://www.abadel-develop.net/verbs?infinito=" + verbsParm, {
-          mode: "cors",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            verbs = data;
-            document.getElementById("btnDomanda").disabled = false;
-            document.getElementById("btnLoading").style.display = "none";
-            document.getElementById("btnDomandaText").style.display = "block";
-          });
+          fetch("https://www.abadel-develop.net/verbs?infinito=" + verbsParm, {
+            mode: "cors",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              verbs = data;
+              document.getElementById("btnDomanda").disabled = false;
+              document.getElementById("btnLoading").style.display = "none";
+              document.getElementById("btnDomandaText").style.display = "block";
+            });
+        } else {
+          document.getElementById("btnDomanda").disabled = false;
+          document.getElementById("btnLoading").style.display = "none";
+          document.getElementById("btnDomandaText").style.display = "block";
+        }
       }
 
       $(window).on("error", function (evt) {
@@ -218,6 +227,7 @@
 
       window.addEventListener("DOMContentLoaded", (evt) => {
         loadLocalStorage();
+        verbsText = document.getElementById("tbVerbi").value;
         retrieveVerbs();
 
         $("#exampleModal").on("hidden.bs.modal", function (e) {
@@ -437,8 +447,8 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="closeModal()">Salvi</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+              <button type="button" class="btn btn-primary" onclick="closeModal()">Salva</button>
             </div>
           </div>
         </div>
