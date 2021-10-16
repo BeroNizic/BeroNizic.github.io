@@ -28,9 +28,10 @@
 
     <style>
       .btn:active,
-      .btn:active {
+      .btn:focus {
         border: none;
         outline: none;
+        box-shadow: none;
       }
 
       .mainWrapper {
@@ -139,8 +140,8 @@
         }
       }
 
-      function setVerbi(writeToLocalStorage) {        
-        verbsText = document.getElementById("tbVerbi").value;        
+      function setVerbi(writeToLocalStorage) {
+        verbsText = document.getElementById("tbVerbi").value;
 
         if (writeToLocalStorage) {
           window.localStorage.setItem("tbVerbi", verbsText);
@@ -179,7 +180,7 @@
         $("#exampleModal").modal("hide");
         if (localStorageAvailable) window.localStorage.setItem("abadel_quiz_settings", true);
         verbsChanged = false;
-        if (document.getElementById("tbVerbi").value !== verbsText) verbsChanged = true;      
+        if (document.getElementById("tbVerbi").value !== verbsText) verbsChanged = true;
         retrieveVerbs(localStorageAvailable, verbsChanged);
       }
 
