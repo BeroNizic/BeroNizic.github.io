@@ -82,6 +82,16 @@
       let tempiModi = [];
       let persone = [];
       let verbi = [];
+      let localStorageAvailable = true;
+      try {
+        let ls = window.localStorage.length;
+        localStorageAvailable = true;
+      } catch (error) {
+        localStorageAvailable = false;
+        const msg = "localStorage not available because " + error;
+        console.log(msg);
+        alert(msg);
+      }
 
       function setTempiModi(writeToLocalStorage) {
         tempiModi = [];
@@ -112,8 +122,10 @@
       }
 
       function loadLocalStorage() {
+        if (!localStorageAvailable) return;
+
         const ls = window.localStorage;
-        if (false && ls.getItem("abadel_quiz_settings") === "true") {
+        if (ls.getItem("abadel_quiz_settings") === "true") {
           const checkBoxes = document.querySelectorAll("input[type=checkbox");
           for (let cb of checkBoxes) {
             const lsVal = ls.getItem(cb.id);
@@ -163,8 +175,8 @@
 
       function closeModal() {
         $("#exampleModal").modal("hide");
-        window.localStorage.setItem("abadel_quiz_settings", true);
-        retrieveVerbs(true);
+        if (localStorageAvailable) window.localStorage.setItem("abadel_quiz_settings", true);
+        retrieveVerbs(localStorageAvailable);
       }
 
       function retrieveVerbs(writeToLocalStorage) {
