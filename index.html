@@ -78,35 +78,65 @@
   </head>
   <body>
     <script>
-      const tempiModi = [
-        "indicativoPresente",
-        "indicativoPassatoProssimo",
-        "indicativoImperfetto",
-        "indicativoTrapassatoProssimo",
-        "indicativoPassatoRemoto",
-        "indicativoTrapassatoRemoto",
-        "indicativoFuturoSemplice",
-        "indicativoFuturoAnteriore",
-        "condizionalePresente",
-        "condizionalePassato",
-        "congiuntivoPresente",
-        "congiuntivoPassato",
-        "congiuntivoImperfetto",
-        "congiuntivoTrapassato",
-        "imperativoPresente",
-      ];
-      const persone = ["io", "tu", "lui", "noi", "voi", "loro"];
-
       let verbs = [];
+      let tempiModi = [];
+      let persone = [];
+      let verbi = [];
 
-      function getVerbi() {
+      function setTempiModi(writeToLocalStorage) {
+        tempiModi = [];
+        const tempiModiElems = document.getElementsByClassName("tempoModo");
+        for (let elem of tempiModiElems) {
+          let name = elem.id.charAt(2).toLowerCase() + elem.id.slice(3);
+          if (elem.checked) {
+            tempiModi.push(name);
+          }
+          if (writeToLocalStorage) {
+            window.localStorage.setItem(elem.id, elem.checked);
+          }
+        }
+      }
+
+      function setPersone(writeToLocalStorage) {
+        persone = [];
+        const personeElems = document.getElementsByClassName("persona");
+        for (let elem of personeElems) {
+          let name = elem.id.charAt(2).toLocaleLowerCase() + elem.id.slice(3);
+          if (elem.checked) {
+            persone.push(name);
+          }
+          if (writeToLocalStorage) {
+            window.localStorage.setItem(elem.id, elem.checked);
+          }
+        }
+      }
+
+      function loadLocalStorage() {
+        const ls = window.localStorage;
+        if (ls.getItem("abadel_quiz_settings") === "true") {
+          const checkBoxes = document.querySelectorAll("input[type=checkbox");
+          for (let cb of checkBoxes) {
+            const lsVal = ls.getItem(cb.id);
+            if (lsVal) {
+              cb.checked = lsVal === "true";
+            }
+          }
+          document.getElementById("tbVerbi").value = ls.getItem("tbVerbi");
+        }
+      }
+
+      function setVerbi(writeToLocalStorage) {
         const verbsText = document.getElementById("tbVerbi").value;
-        const verbi = verbsText
+
+        if (writeToLocalStorage) {
+          window.localStorage.setItem("tbVerbi", verbsText);
+        }
+
+        verbi = verbsText
           .split(",")
           .map((elem) => elem.trim())
           .filter((i) => i);
         console.log("getVerbi", verbi);
-        return verbi;
       }
 
       function getRandomInt(max) {
@@ -131,13 +161,24 @@
         document.getElementById("risposta").innerText = risposta;
       }
 
-      function showSettings() {}
+      function closeModal() {
+        $("#exampleModal").modal("hide");
+        window.localStorage.setItem("abadel_quiz_settings", true);
+        retrieveVerbs(true);
+      }
 
-      function retrieveVerbs(verbsParm) {
+      function retrieveVerbs(writeToLocalStorage) {
         document.getElementById("btnDomanda").disabled = true;
         document.getElementById("btnRisposta").disabled = true;
         document.getElementById("btnLoading").style.display = "block";
         document.getElementById("btnDomandaText").style.display = "none";
+        document.getElementById("risposta").innerText = "-";
+        document.getElementById("domanda").innerText = "-";
+        setPersone(writeToLocalStorage);
+        setTempiModi(writeToLocalStorage);
+        setVerbi(writeToLocalStorage);
+        let verbsParm = verbi.join();
+        console.log("verbsParm", verbsParm);
 
         fetch("https://www.abadel-develop.net/verbs?infinito=" + verbsParm, {
           mode: "cors",
@@ -152,9 +193,13 @@
       }
 
       window.addEventListener("DOMContentLoaded", (evt) => {
-        let verbsParm = getVerbi().join();
-        console.log("verbsParm", verbsParm);
-        retrieveVerbs(verbsParm);
+        loadLocalStorage();
+        retrieveVerbs();
+
+        $("#exampleModal").on("hidden.bs.modal", function (e) {
+          console.log("modal hidden", e);
+          // do something...
+        });
       });
     </script>
     <div class="container mainWrapper">
@@ -225,37 +270,57 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               <div class="row">
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoPresente" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbIndicativoPresente" checked />
                     <label class="form-check-label" for="cbIndicativoPresente">Presente</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoPassatoProssimo" checked />
+                    <input
+                      class="form-check-input tempoModo"
+                      type="checkbox"
+                      id="cbIndicativoPassatoProssimo"
+                      checked
+                    />
                     <label class="form-check-label" for="cbIndicativoPassatoProssimo">Passato prossimo</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoImperfetto" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbIndicativoImperfetto" checked />
                     <label class="form-check-label" for="cbIndicativoImperfetto">Imperfetto</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoTrapassatoProssimo" checked />
+                    <input
+                      class="form-check-input tempoModo"
+                      type="checkbox"
+                      id="cbIndicativoTrapassatoProssimo"
+                      checked
+                    />
                     <label class="form-check-label" for="cbIndicativoTrapassatoProssimo">Trapassato prossimo</label>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoPassatoRemoto" />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbIndicativoPassatoRemoto" />
                     <label class="form-check-label" for="cbIndicativoPassatoRemoto">Passato remoto</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoTrapassatoRemoto" checked />
+                    <input
+                      class="form-check-input tempoModo"
+                      type="checkbox"
+                      id="cbIndicativoTrapassatoRemoto"
+                      checked
+                    />
                     <label class="form-check-label" for="cbIndicativoTrapassatoRemoto">Trapassato remoto</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoFuturoSemplice" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbIndicativoFuturoSemplice" checked />
                     <label class="form-check-label" for="cbIndicativoFuturoSemplice">Futuro semplice</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIndicativoFuturoAnteriore" checked />
+                    <input
+                      class="form-check-input tempoModo"
+                      type="checkbox"
+                      id="cbIndicativoFuturoAnteriore"
+                      checked
+                    />
                     <label class="form-check-label" for="cbIndicativoFuturoAnteriore">Futuro anteriorire</label>
                   </div>
                 </div>
@@ -264,13 +329,13 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               <div class="row">
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCondizionalePresente" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCondizionalePresente" checked />
                     <label class="form-check-label" for="cbCondizionalePresente">Presente</label>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCondizionalePassato" />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCondizionalePassato" checked />
                     <label class="form-check-label" for="cbCondizionalePassato">Passato</label>
                   </div>
                 </div>
@@ -279,21 +344,21 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               <div class="row">
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoPresente" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCongiuntivoPresente" checked />
                     <label class="form-check-label" for="cbCongiuntivoPresente">Presente</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoPassato" checked />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCongiuntivoPassato" checked />
                     <label class="form-check-label" for="cbCongiuntivoPassato">Passato</label>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoImperfetto" />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCongiuntivoImperfetto" checked />
                     <label class="form-check-label" for="cbCongiuntivoImperfetto">Imperfetto</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbCongiuntivoTrapassato" />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbCongiuntivoTrapassato" checked />
                     <label class="form-check-label" for="cbCongiuntivoTrapassato">Trapassato</label>
                   </div>
                 </div>
@@ -302,7 +367,7 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               <div class="row">
                 <div class="col-6">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbImperativoPresente" />
+                    <input class="form-check-input tempoModo" type="checkbox" id="cbImperativoPresente" checked />
                     <label class="form-check-label" for="cbImperativoPresente">Presente</label>
                   </div>
                 </div>
@@ -311,37 +376,37 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
               <div class="row">
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbIo" />
+                    <input class="form-check-input persona" type="checkbox" id="cbIo" checked />
                     <label class="form-check-label" for="cbIo">Io</label>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbTu" />
+                    <input class="form-check-input persona" type="checkbox" id="cbTu" checked />
                     <label class="form-check-label" for="cbTu">Tu</label>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbLui" />
+                    <input class="form-check-input persona" type="checkbox" id="cbLui" checked />
                     <label class="form-check-label" for="cbLui">Lui</label>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbNoi" />
+                    <input class="form-check-input persona" type="checkbox" id="cbNoi" checked />
                     <label class="form-check-label" for="cbNoi">Noi</label>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbVoi" />
+                    <input class="form-check-input persona" type="checkbox" id="cbVoi" checked />
                     <label class="form-check-label" for="cbTu">Voi</label>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="cbLoro" />
+                    <input class="form-check-input persona" type="checkbox" id="cbLoro" checked />
                     <label class="form-check-label" for="cbLui">Loro</label>
                   </div>
                 </div>
@@ -349,7 +414,7 @@ parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-primary" onclick="closeModal()">Salvi</button>
             </div>
           </div>
         </div>
