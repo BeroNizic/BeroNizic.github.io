@@ -27,6 +27,12 @@
     ></script>
 
     <style>
+      .btn:active,
+      .btn:active {
+        border: none;
+        outline: none;
+      }
+
       .mainWrapper {
         align-items: center;
         min-height: 100vh;
@@ -47,6 +53,26 @@
       .testo {
         font-weight: bold;
         font-size: 125%;
+      }
+
+      .spinnerNote {
+        margin-left: auto;
+        margin-right: auto;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+
+      .btnSettings {
+        position: fixed;
+        right: 50px;
+        top: 50px;
+        width: 50px;
+        height: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-width: 50px;
+        color: #007bff;
+        /*background-image: url("settings.png"); */
       }
     </style>
   </head>
@@ -69,78 +95,19 @@
         "congiuntivoTrapassato",
         "imperativoPresente",
       ];
-      const verbi = ["parlare", "dare", "fare", "stare", "temere", "servire", "avere", "andare", "finire", "essere"];
       const persone = ["io", "tu", "lui", "noi", "voi", "loro"];
 
-      const pair = {
-        presente: {
-          parlare: ["parlo", "parli", "parla", "parliamo", "parlate", "parlano"],
-          dare: ["do", "dai", "dà", "diamo", "date", "danno"],
-          fare: ["fo/accio", "fai", "fa", "facciamo", "fate", "fanno"],
-          stare: ["sto", "stai", "sta", "stiamo", "state", "stanno"],
-          temere: ["temo", "temi", "teme", "temiamo", "temete", "temono"],
-          servire: ["servo", "servi", "serve", "serviamo", "servite", "servono"],
-          avere: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
-          andare: ["vado", "vai", "va", "andiamo", "andate", "vanno"],
-          finire: ["finisco", "finisci", "finisce", "finiamo", "finite", "finiscono"],
-          essere: ["sono", "sei", "è", "siamo", "siete", "sono"],
-          display: "presente",
-        },
-        imperfetto: {
-          parlare: ["parlavo", "parlavi", "parlava", "parlavamo", "parlavate", "parlavano"],
-          dare: ["davo", "davi", "dava", "davamo", "davate", "davano"],
-          fare: ["facevo", "facevi", "faceva", "facevamo", "facevate", "facevano"],
-          stare: ["stavo", "stavi", "stava", "stavamo", "stavate", "stavano"],
-          temere: ["temevo", "temevi", "temeva", "temevamo", "temevate", "temevano"],
-          servire: ["servivo", "servivi", "serviva", "servivamo", "servivate", "servivano"],
-          avere: ["avevo", "avevi", "aveva", "avevamo", "avevate", "avevano"],
-          andare: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"],
-          finire: ["finivo", "finivi", "finiva", "finivamo", "finivate", "finivano"],
-          essere: ["ero", "eri", "era", "eravamo", "eravate", "erano"],
-          display: "imperfetto",
-        },
-        futuroSemplice: {
-          parlare: ["parlerò", "parlerai", "parlerà", "parleremo", "parlerete", "parleranno"],
-          dare: ["darò", "darai", "darà", "daremo", "darete", "daranno"],
-          fare: ["farò", "farai", "farà", "faremo", "farete", "faranno"],
-          stare: ["starò", "starai", "starà", "staremo", "starete", "staranno"],
-          temere: ["temerò", "temerai", "temerà", "temeremo", "temerete", "temeranno"],
-          servire: ["servirò", "servirai", "servirà", "serviremo", "servirete", "serviranno"],
-          avere: ["avrò", "avrai", "avrà", "avremo", "avrete", "avranno"],
-          andare: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
-          finire: ["finirò", "finirai", "finirà", "finiremo", "finirete", "finiranno"],
-          essere: ["sarò", "sarai", "sarà", "saremo", "sarete", "saranno"],
-          display: "futuro semplice",
-        },
-        condizionalePresente: {
-          parlare: ["parlerei", "parleresti", "parlerebbe", "parleremmo", "parlereste", "parlerebbero"],
-          dare: ["darei", "daresti", "darebbe", "daremmo", "dareste", "darebbero"],
-          fare: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"],
-          stare: ["starei", "staresti", "starebbe", "staremmo", "stareste", "starebbero"],
-          temere: ["temerei", "temeresti", "temerebbe", "temeremmo", "temereste", "temerebbero"],
-          servire: ["servirei", "serviresti", "servirebbe", "serviremmo", "servireste", "servirebbero"],
-          avere: ["avrei", "avresti", "avrebbe", "avremmo", "avreste", "avrebbero"],
-          andare: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"],
-          finire: ["finirei", "finiresti", "finirebbe", "finiremmo", "finireste", "finirebbero"],
-          essere: ["sarei", "saresti", "sarebbe", "saremmo", "sareste", "sarebbero"],
-          display: "condizionale presente",
-        },
-        imperativo: {
-          parlare: ["-", "parla", "parli", "parliamo", "parlate", "parlino"],
-          dare: ["-", "da'/ai", "dia", "diamo", "date", "diano"],
-          fare: ["-", "fa'/ai", "faccia", "facciamo", "fate", "facciano"],
-          stare: ["-", "sta'/ai", "stia", "stiamo", "state", "stiano"],
-          temere: ["-", "temi", "tema", "temiamo", "temete", "temano"],
-          servire: ["-", "servi", "serva", "serviamo", "servite", "servano"],
-          avere: ["-", "abbi", "abbia", "abbiamo", "abbiate", "abbiano"],
-          andare: ["-", "va'/vai", "vada", "andiamo", "andate", "vadano"],
-          finire: ["-", "finisci", "finisca", "finiamo", "finite", "finiscano"],
-          essere: ["-", "sii", "sia", "siamo", "siate", "siano"],
-          display: "imperativo",
-        },
-      };
-
       let verbs = [];
+
+      function getVerbi() {
+        const verbsText = document.getElementById("tbVerbi").value;
+        const verbi = verbsText
+          .split(",")
+          .map((elem) => elem.trim())
+          .filter((i) => i);
+        console.log("getVerbi", verbi);
+        return verbi;
+      }
 
       function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -157,6 +124,7 @@
         document.getElementById("domanda").innerText = question;
         document.getElementById("risposta").innerText = "-";
         risposta = verbo[tempoModo][persona];
+        document.getElementById("btnRisposta").disabled = false;
       }
 
       function mostraRisposta() {
@@ -165,48 +133,68 @@
 
       function showSettings() {}
 
-      window.addEventListener("DOMContentLoaded", (evt) => {
-        let verbsParm = "";
-        verbi.forEach((e) => {
-          if (verbsParm) {
-            verbsParm += ",";
-          }
-          verbsParm += e;
-        });
-        //console.log(verbsParm);
-        //fetch("http://localhost:53994/verbs?infinito=" + verbsParm)
+      function retrieveVerbs(verbsParm) {
+        document.getElementById("btnDomanda").disabled = true;
+        document.getElementById("btnRisposta").disabled = true;
+        document.getElementById("btnLoading").style.display = "block";
+        document.getElementById("btnDomandaText").style.display = "none";
+
         fetch("https://www.abadel-develop.net/verbs?infinito=" + verbsParm, {
           mode: "cors",
         })
           .then((response) => response.json())
-          .then((data) => (verbs = data));
+          .then((data) => {
+            verbs = data;
+            document.getElementById("btnDomanda").disabled = false;
+            document.getElementById("btnLoading").style.display = "none";
+            document.getElementById("btnDomandaText").style.display = "block";
+          });
+      }
+
+      window.addEventListener("DOMContentLoaded", (evt) => {
+        let verbsParm = getVerbi().join();
+        console.log("verbsParm", verbsParm);
+        retrieveVerbs(verbsParm);
       });
     </script>
     <div class="container mainWrapper">
-      <button
-        class="btn"
-        type="button"
-        data-toggle="modal"
-        data-target="#exampleModal"
-        style="
-          position: fixed;
-          right: 50px;
-          top: 50px;
-          width: 50px;
-          height: 50px;
-          background-repeat: no-repeat;
-          background-position: center;
-          min-width: 50px;
-          background-image: url('settings.png');
-        "
-      ></button>
+      <button class="btn btnSettings" type="button" data-toggle="modal" data-target="#exampleModal">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          fill="currentColor"
+          class="bi bi-gear"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+          />
+          <path
+            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
+          />
+        </svg>
+      </button>
 
       <div class="row">
-        <button class="btn btn-primary mb-4 btn-custom" type="button" onclick="getRandom()">Domanda</button>
+        <button class="btn btn-primary mb-4 btn-custom" type="button" id="btnDomanda" onclick="getRandom()" disabled>
+          <div class="spinner-border spinnerNote" id="btnLoading" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <span id="btnDomandaText">Domanda</span>
+        </button>
       </div>
       <div class="row center mb-4 testo" id="domanda">-</div>
       <div class="row">
-        <button class="btn btn-primary mt-4 mb-4 btn-custom" type="button" onclick="mostraRisposta()">Risposta</button>
+        <button
+          class="btn btn-primary mt-4 mb-4 btn-custom"
+          type="button"
+          id="btnRisposta"
+          onclick="mostraRisposta()"
+          disabled
+        >
+          Risposta
+        </button>
       </div>
       <div class="row center testo" id="risposta">-</div>
       <!-- Modal -->
@@ -230,7 +218,7 @@
               <div class="form-group">
                 <label for="tbVerbi">Verbi</label>
                 <textarea type="text" class="form-control" id="tbVerbi">
-parlare, dare, fare, stare, temere, servire, avere, andare, finire, essere</textarea
+parlare, dare, fare, stare, temere   , servire , avere, andare, finire, essere</textarea
                 >
               </div>
               <h5>Indicativo</h5>
