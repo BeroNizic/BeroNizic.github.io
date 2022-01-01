@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple quiz</title>
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+      integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      .form-check {
+        font-size: 30px;
+        text-align: center;
+        align-items: center;
+      }
+
+      input[type="radio"] {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("DOMContentLoaded", (evt) => {
+        const dt = new Date();
+        const date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+        const time = dt.getHours() + ":" + dt.getMinutes();
+        const dateTime = date + "T" + time;
+        document.getElementById("date").value = dateTime;
+      });
+
+      function send() {
+        const form = document.getElementById("quantifyForm");
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        axios({
+          method: "post",
+          //url: "https://localhost:44331/api/quantify/add",
+          url: "https://www.abadel-develop.net/api/quantify/add",
+          data: data,
+        })
+          .then(function (response) {
+            // handle success
+            console.log(response);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+          .then(function () {
+            // always executed
+          });
+      }
+    </script>
+    <div class="container">
+      <form class="justify-content-center" id="quantifyForm">
+        <h2 class="text-center">Mental</h2>
+        <div class="d-flex">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="num1" id="num1_1" value="1" checked />
+            <label class="form-check-label pl-3" for="num1_1"> 1 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num1" id="num1_2" value="2" />
+            <label class="form-check-label pl-3" for="num1_2"> 2 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num1" id="num1_3" value="3" />
+            <label class="form-check-label pl-3" for="num1_3"> 3 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num1" id="num1_4" value="4" />
+            <label class="form-check-label pl-3" for="num1_4"> 4 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num1" id="num1_5" value="5" />
+            <label class="form-check-label pl-3" for="num1_5"> 5 </label>
+          </div>
+        </div>
+        <div class="form-input">
+          <textarea
+            type="text"
+            class="form-control"
+            id="text1"
+            name="text1"
+            placeholder="Few words about your mood"
+          ></textarea>
+        </div>
+        <h2 class="text-center mt-5">Physical</h2>
+        <div class="d-flex">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="num2" id="num2_1" value="1" checked />
+            <label class="form-check-label pl-3" for="num2_1"> 1 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num2" id="num2_2" value="2" />
+            <label class="form-check-label pl-3" for="num2_2"> 2 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num2" id="num2_3" value="3" />
+            <label class="form-check-label pl-3" for="num2_3"> 3 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num2" id="num2_4" value="4" />
+            <label class="form-check-label pl-3" for="num2_4"> 4 </label>
+          </div>
+          <div class="form-check ml-5">
+            <input class="form-check-input" type="radio" name="num2" id="num2_5" value="5" />
+            <label class="form-check-label pl-3" for="num2_5"> 5 </label>
+          </div>
+        </div>
+        <div class="form-input">
+          <textarea
+            type="text"
+            class="form-control"
+            id="text2"
+            name="text2"
+            placeholder="Few words about your physical"
+          ></textarea>
+        </div>
+        <div class="d-flex mt-5">
+          <div class="form-input">
+            <label class="d-inline" for="text3">Date</label>
+            <input type="text" class="form-control d-inline" id="date" name="date" placeholder="Date" />
+          </div>
+        </div>
+        <button class="btn btn-primary mt-5" type="button" onclick="send()">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
