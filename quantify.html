@@ -60,7 +60,7 @@
         const alertDiv = document.getElementById("alertDiv");
         const alertMsg = document.getElementById("alertMsg");
         const btn = document.getElementById("btnSubmit");
-        btn.setAttribute("disabled", "true");
+        btn.disabled = true;
         const spinner = document.getElementById("btnSpinner");
         spinner.classList.remove("d-none");
         const btnText = document.getElementById("btnText");
@@ -90,7 +90,7 @@
             console.log(error);
           })
           .then(function () {
-            btn.setAttribute("disabled", "false");
+            btn.disabled = false;
             spinner.classList.add("d-none");
             btnText.classList.remove("d-none");
             // always executed
