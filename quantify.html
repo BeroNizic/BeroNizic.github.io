@@ -54,7 +54,9 @@
       window.addEventListener("DOMContentLoaded", (evt) => {
         const dt = new Date();
         const date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-        const time = dt.getHours() + ":" + dt.getMinutes();
+        const hour = dt.getHours();
+        const minutes = dt.getMinutes();
+        const time = (hour < 10 ? "0" : "") + hour + ":" + (minutes < 10 ? "0" : "") + minutes;
         const dateTime = date + "T" + time;
         document.getElementById("date").value = dateTime;
       });
