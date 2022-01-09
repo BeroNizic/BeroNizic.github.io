@@ -4,7 +4,7 @@ $(document).ready(function () {
   });
 });
 
-window.addEventListener("DOMContentLoaded", (evt) => {
+function setDateTime() {
   const dt = new Date();
   const date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
   const hour = dt.getHours();
@@ -12,6 +12,10 @@ window.addEventListener("DOMContentLoaded", (evt) => {
   const time = (hour < 10 ? "0" : "") + hour + ":" + (minutes < 10 ? "0" : "") + minutes;
   const dateTime = date + "T" + time;
   document.getElementById("date").value = dateTime;
+}
+
+window.addEventListener("DOMContentLoaded", (evt) => {
+  setDateTime();
 });
 
 function send(formId, formUrl, isLocal = false) {

@@ -130,22 +130,31 @@
 
       function setField(activity, fieldName, category) {
         const field = document.getElementById(fieldName);
-        if (activity[fieldName] !== undefined) {
-          field.value = activity[fieldName];
-          document.getElementsByClassName(fieldName)[0].style.display = "block";
+        let displayValue = "none";
+        const isEmptyActivity = activity === undefined;
+        if (isEmptyActivity) {
+          displayValue = "none";
         } else {
-          field.value = "";
-          document.getElementsByClassName(fieldName)[0].style.display = "none";
+          if (fieldName === "text" || fieldName === "date") {
+            displayValue = "block";
+            field.value = "";
+          } else {
+            displayValue = activity[fieldName] !== undefined ? "block" : "none";
+            field.value = activity[fieldName] !== undefined ? activity[fieldName] : "";
+          }
         }
+
+        document.getElementsByClassName(fieldName)[0].style.display = displayValue;
         document.getElementById("category").value = category;
-        document.getElementById("name").value = activity.name;
+        document.getElementById("name").value = isEmptyActivity ? "" : activity.name;
+        document.getElementById("btnSubmit").disabled = isEmptyActivity;
       }
 
       function clickActivity(category, name) {
         const categoryItem = categories.find((c) => c.name === category);
         const activities = categoryItem.activites;
         const activity = activities.find((a) => a.name === name);
-        const fields = ["reps", "weight", "duration", "distance", "unit", "unit2"];
+        const fields = ["reps", "weight", "duration", "distance", "unit", "unit2", "text", "date"];
         fields.forEach((field) => {
           setField(activity, field, category);
         });
@@ -161,18 +170,21 @@
             let btn = document.createElement("button");
             btn.addEventListener("click", (e) => {
               clickActivity(c.name, a.name);
+              setDateTime();
             });
             btn.classList.add("btn");
-            btn.classList.add("btn-secondary");
+            btn.classList.add("btn-info");
             btn.classList.add("ml-2");
+            btn.classList.add("mt-3");
             btn.innerHTML = a.name;
             tab.appendChild(btn);
           });
         });
+        clickActivity("Mobility", "");
       });
     </script>
     <div class="container">
-      <ul class="nav nav-pills nav-tabs" role="tablist">
+      <ul class="nav nav-pills nav-tabs mt-2" role="tablist">
         <li class="nav-item" role="presentation">
           <a class="nav-link active" data-toggle="pill" role="tab" href="#tabMobilityContent">Mobility</a>
         </li>
@@ -227,7 +239,7 @@
           <input type="text" class="form-control" id="unit2" name="unit2" placeholder="Unit2" />
         </div>
 
-        <div class="form-input">
+        <div class="form-input text">
           <textarea
             type="text"
             class="form-control"
@@ -237,8 +249,8 @@
           ></textarea>
         </div>
         <div class="d-flex mt-4 mb-2">
-          <div class="form-input">
-            <label class="d-inline" for="text3">Date</label>
+          <div class="form-input date">
+            <label class="d-inline" for="date">Date</label>
             <input type="text" class="form-control d-inline w-75" id="date" name="date" placeholder="Date" />
           </div>
         </div>
