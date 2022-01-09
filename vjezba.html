@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exercise</title>
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+      integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+      .alert {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const categories = [
+        {
+          name: "Mobility",
+          activites: [
+            {
+              name: "Squat",
+              reps: 10,
+            },
+            {
+              name: "Push-up",
+              reps: 10,
+            },
+            {
+              name: "Bear crawl",
+              duration: 30,
+              unit: "s",
+            },
+            {
+              name: "Frogger",
+              duration: 30,
+              unit: "s",
+            },
+            {
+              name: "Monkey",
+              duration: 30,
+              unit: "s",
+            },
+            { name: "Razgibavanje", duration: 30, unit: "s" },
+          ],
+        },
+        {
+          name: "Strength",
+          activites: [
+            {
+              name: "Bench Press",
+              reps: 6,
+              weight: 80,
+              unit: "kg",
+            },
+            {
+              name: "Deadlift",
+              reps: 6,
+              weight: 80,
+              unit: "kg",
+            },
+            {
+              name: "Chin-up",
+              reps: 6,
+              weight: 0,
+              unit: "kg",
+            },
+            {
+              name: "Pull-up",
+              reps: 6,
+              weight: 0,
+              unit: "kg",
+            },
+            {
+              name: "Dips",
+              reps: 8,
+              weight: 0,
+              unit: "kg",
+            },
+            {
+              name: "Ring-dips",
+              reps: 5,
+              weight: 0,
+              unit: "kg",
+            },
+            { name: "Ring hold", duration: 30, unit: "s" },
+            { name: "L-sit", duration: 20, unit: "s" },
+            { name: "Hollow body", duration: 45, unit: "s" },
+          ],
+        },
+        {
+          name: "Cardio",
+          activites: [
+            {
+              name: "Stationary Bike",
+              duration: 5,
+              unit: "min",
+              distance: 10,
+              unit2: "km",
+            },
+            {
+              name: "Jump Rope",
+              duration: 60,
+              unit: "s",
+            },
+          ],
+        },
+      ];
+
+      function setField(activity, fieldName, category) {
+        const field = document.getElementById(fieldName);
+        if (activity[fieldName] !== undefined) {
+          field.value = activity[fieldName];
+          document.getElementsByClassName(fieldName)[0].style.display = "block";
+        } else {
+          field.value = "";
+          document.getElementsByClassName(fieldName)[0].style.display = "none";
+        }
+        document.getElementById("category").value = category;
+        document.getElementById("name").value = activity.name;
+      }
+
+      function clickActivity(category, name) {
+        const categoryItem = categories.find((c) => c.name === category);
+        const activities = categoryItem.activites;
+        const activity = activities.find((a) => a.name === name);
+        const fields = ["reps", "weight", "duration", "distance", "unit", "unit2"];
+        fields.forEach((field) => {
+          setField(activity, field, category);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        categories.forEach((c) => {
+          const tabName = "tab" + c.name + "Content";
+          const tab = document.getElementById(tabName);
+          const categoryItem = categories.find((cat) => cat.name === c.name);
+          const activities = categoryItem.activites;
+          activities.forEach((a) => {
+            let btn = document.createElement("button");
+            btn.addEventListener("click", (e) => {
+              clickActivity(c.name, a.name);
+            });
+            btn.classList.add("btn");
+            btn.classList.add("btn-secondary");
+            btn.classList.add("ml-2");
+            btn.innerHTML = a.name;
+            tab.appendChild(btn);
+          });
+        });
+      });
+    </script>
+    <div class="container">
+      <ul class="nav nav-pills nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" data-toggle="pill" role="tab" href="#tabMobilityContent">Mobility</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-toggle="pill" role="tab" href="#tabStrengthContent">Strength</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-toggle="pill" role="tab" href="#tabCardioContent">Cardio</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" role="tabpanel" id="tabMobilityContent"></div>
+        <div class="tab-pane fade show" role="tabpanel" id="tabStrengthContent"></div>
+        <div class="tab-pane fade show" role="tabpanel" id="tabCardioContent"></div>
+      </div>
+      <form id="exerciseForm">
+        <div class="form-group">
+          <input type="hidden" class="form-control" id="name" name="name" placeholder="Activity name" readonly />
+        </div>
+        <div class="form-group">
+          <input
+            type="hidden"
+            class="form-control"
+            id="category"
+            name="category"
+            placeholder="Category name"
+            readonly
+          />
+        </div>
+        <div class="form-group reps row">
+          <label for="reps" class="col-1">Reps:</label>
+          <input type="text" class="form-control col-1" id="reps" name="reps" placeholder="Reps" />
+        </div>
+        <div class="form-group row duration">
+          <label for="duration" class="col-1">Duration:</label>
+          <input type="text" class="form-control col-1" id="duration" name="duration" />
+        </div>
+        <div class="form-group unit">
+          <label for="unit">Unit:</label>
+          <input type="text" class="form-control" id="unit" name="unit" placeholder="Unit" />
+        </div>
+        <div class="form-group duration distance">
+          <label for="distance">Distance:</label>
+          <input type="text" class="form-control" id="distance" name="distance" placeholder="distance" />
+        </div>
+        <div class="form-group weight">
+          <label for="reps">Weight:</label>
+          <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight" />
+        </div>
+        <div class="form-group unit2">
+          <label for="unit2">Unit2:</label>
+          <input type="text" class="form-control" id="unit2" name="unit2" placeholder="Unit2" />
+        </div>
+
+        <div class="form-input">
+          <textarea
+            type="text"
+            class="form-control"
+            id="text"
+            name="text"
+            placeholder="Few words about your activity"
+          ></textarea>
+        </div>
+        <div class="d-flex mt-4 mb-2">
+          <div class="form-input">
+            <label class="d-inline" for="text3">Date</label>
+            <input type="text" class="form-control d-inline w-75" id="date" name="date" placeholder="Date" />
+          </div>
+        </div>
+        <div class="alert alert-success alert-dismissible" id="alertDiv" role="alert">
+          <p id="alertMsg"></p>
+          <button type="button" id="btnCloseAlert" class="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="row justify-content-center">
+          <button
+            id="btnSubmit"
+            class="btn btn-primary"
+            type="button"
+            onclick="send('exerciseForm', '/exercise/add', false)"
+          >
+            <span class="spinner-border d-none" id="btnSpinner" role="status"></span>
+            <span id="btnText">Submit</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
