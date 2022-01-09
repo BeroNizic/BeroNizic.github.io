@@ -31,6 +31,15 @@
       .alert {
         display: none;
       }
+
+      .btn-info:not(:disabled):not(.disabled):active,
+      .btn-info:focus {
+        /* background-color: #0c7d8f;
+        border-color: #0c7d8f;
+        */
+        background-color: #043c44;
+        border-color: #043c44;
+      }
     </style>
   </head>
   <body>
@@ -63,6 +72,8 @@
               unit: "s",
             },
             { name: "Razgibavanje", duration: 30, unit: "s" },
+            { name: "Pregib", duration: 30, unit: "s" },
+            { name: "Burmease sit", duration: 3, unit: "min" },
           ],
         },
         {
