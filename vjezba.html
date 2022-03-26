@@ -199,7 +199,7 @@
         const categoryItem = categories.find((c) => c.name === category);
         const activities = categoryItem.activites;
         const activity = activities.find((a) => a.name === name);
-        const fields = ["reps", "weight", "duration", "distance", "unit", "unit2", "text", "date"];
+        const fields = ["reps", "weight", "duration", "distance", "bpm", "unit", "unit2", "text", "date"];
         fields.forEach((field) => {
           setField(activity, field, category);
         });
@@ -279,11 +279,10 @@
           <label for="reps">Weight:</label>
           <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight" />
         </div>
-        <div class="form-group unit2">
-          <label for="unit2">Unit2:</label>
-          <input type="text" class="form-control" id="unit2" name="unit2" placeholder="Unit2" />
+        <div class="form-group bpm">
+          <label for="bpm">BPM:</label>
+          <input type="text" class="form-control" id="bpm" name="bpm" placeholder="BPM" />
         </div>
-
         <div class="form-input text">
           <textarea
             type="text"
