@@ -33,6 +33,7 @@
       }
 
       .btn-info:not(:disabled):not(.disabled):active,
+      .btn-info.activeBtn,
       .btn-info:focus {
         /* background-color: #0c7d8f;
         border-color: #0c7d8f;
@@ -217,6 +218,10 @@
           activities.forEach((a) => {
             let btn = document.createElement("button");
             btn.addEventListener("click", (e) => {
+              document.querySelectorAll(".activeBtn").forEach((b) => {
+                b.classList.remove("activeBtn");
+              });
+              e.target.classList.add("activeBtn");
               clickActivity(c.name, a.name);
               setDateTime();
             });
