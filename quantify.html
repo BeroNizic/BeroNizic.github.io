@@ -48,7 +48,10 @@
     <script></script>
     <div class="container">
       <form class="justify-content-center" id="quantifyForm">
-        <h4 class="text-center mt-2">Mental</h2>
+        <h4 class="text-center mt-2">
+          Mental and Values
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#mentalInfo">?</button>
+        </h4>
         <div class="d-flex justify-content-between mt-2 flex-wrap">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="num1" id="num1_1" value="1" checked />
@@ -80,7 +83,10 @@
             placeholder="Few words about your values"
           ></textarea>
         </div>
-        <h4 class="text-center mt-3">Physical</h2>
+        <h4 class="text-center mt-3">
+          Physical
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#physicalInfo">?</button>
+        </h4>
         <div class="d-flex mt-2 justify-content-between flex-wrap">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="num2" id="num2_1" value="1" checked />
@@ -112,7 +118,10 @@
             placeholder="Few words about your physical"
           ></textarea>
         </div>
-        <h4 class="text-center mt-3">Mindfulness</h2>
+        <h4 class="text-center mt-3">
+          Mindfulness
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#mindfulnessInfo">?</button>
+        </h4>
         <div class="d-flex mt-2 justify-content-between flex-wrap">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="num3" id="num3_1" value="1" checked />
@@ -144,7 +153,10 @@
             placeholder="Few words about your mindfulness"
           ></textarea>
         </div>
-        <h4 class="text-center mt-4">Mobility</h2>
+        <h4 class="text-center mt-4">
+          Body
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#mobilityInfo">?</button>
+        </h4>
         <div class="d-flex mt-3 justify-content-between flex-wrap">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="num4" id="num4_1" value="1" checked />
@@ -195,6 +207,154 @@
           </button>
         </div>
       </form>
+    </div>
+    <div class="modal fade" id="mentalInfo" role="dialog">
+      <div class="modal-dialog document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Mental and values</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h5>Relaxed alertness</h5>
+            <ul>
+              <li>Mindfulness</li>
+              <li>Posture</li>
+              <li>Mobility</li>
+              <li>Calm</li>
+              <li>Clarity</li>
+            </ul>
+            <h5>People</h5>
+            <ul>
+              <li>Assertive</li>
+              <li>Friendly</li>
+              <li>Compassionate</li>
+              <li>Calm</li>
+              <li>Clear/concise</li>
+              <li>Not appologize</li>
+              <li>Not judging/Accepting</li>
+              <li>Qualify</li>
+            </ul>
+            <h5>Character</h5>
+            <ul>
+              <li>Moderation</li>
+              <li>Discipline but also self-compassion</li>
+              <li>Organiziranost</li>
+              <li>responsible and reliable</li>
+              <li>Urednost</li>
+              <li>Flexibility</li>
+              <li>Preservance</li>
+              <li>Non-avoidance</li>
+              <li>Disconfort training - Resilience</li>
+            </ul>
+            <h5>Healthy life style</h5>
+            <ul>
+              <li>Sleep/Rest</li>
+              <li>Food</li>
+              <li>Exercise</li>
+              <li>Environment</li>
+            </ul>
+            <h5>Amor Fati and Wisdom</h5>
+            <ul>
+              <li>Reflective inquiry</li>
+              <li>Grattitude</li>
+              <li>Acceptance</li>
+              <li>Appreciation</li>
+            </ul>
+            <h5>Goals</h5>
+            <ul>
+              <li>Goal clarity</li>
+              <li>On what I have control?</li>
+              <li>Goal review/reflextive inquiry</li>
+              <li>Goal orientated</li>
+              <li>Strategic, long term, short term, next block...</li>
+              <li>productivity, not busyness</li>
+              <li>right/significant thing, not the easy one</li>
+              <li>Financijska urednost</li>
+              <li>Financial intelligence</li>
+            </ul>
+            <h5>Good citizen of the world</h5>
+            <ul>
+              <li>honest</li>
+              <li>good will to other people</li>
+              <li>good to the environment</li>
+              <li>do my duty</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="physicalInfo" role="dialog">
+      <div class="modal-dialog document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Physical</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>level of energy?</li>
+              <li>any health problems?</li>
+              <li>mental clarity?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="mindfulnessInfo" role="dialog">
+      <div class="modal-dialog document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Mindfulness</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h5>Values</h5>
+            <ul>
+              <li><b>relaxed alertness</b></li>
+              <li>micro-hits</li>
+              <li>meditation</li>
+              <li>labeling talk</li>
+              <li>mindful mobility</li>
+              <li>labeling impulses</li>
+              <li>labeling mind-wandering/fusion</li>
+              <li>labeling distractions and deviations</li>
+              <li>labeling auto behavior</li>
+              <li>be present</li>
+              <li>choose awareness type (situational, body, mind)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="mobilityInfo" role="dialog">
+      <div class="modal-dialog document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Body</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h5>Values</h5>
+            <ul>
+              <li><b>relaxed alertness</b></li>
+              <li>deep breathing</li>
+              <li>posture&upright go</li>
+              <li>mindful mobility</li>
+              <li>exercise</li>
+              <li>experimenting and learning</li>
+              <li>movement</li>
+            </ul>
+            <h5>Negative points:</h5>
+            <ul>
+              <li>too much sitting</li>
+              <li>poor posture</li>
+              <li>no movement</li>
+              <li>poor breathing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
